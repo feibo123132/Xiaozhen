@@ -1,2 +1,17 @@
+node_modules/
+.next/
+out/
+coverage/
+playwright-report/
+test-results/
+.codex-temp/
+src/generated/prisma/
+*.tsbuildinfo
+.env
+.env.local
+dev.db
+prisma/e2e.db
+prisma/e2e.db-journal
+prisma/dev.db-journal
 .superpowers/
 .worktrees/

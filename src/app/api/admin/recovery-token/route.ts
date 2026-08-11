@@ -1,0 +1,6 @@
+import { z } from 'zod';
+import { createAccountToken } from '@/features/auth/account-token';
+import { authorizeAdminRequest } from '@/features/auth/guards';
+import { prisma } from '@/lib/db';
+import { isSameOrigin, jsonError } from '@/lib/http';
+export async function POST(request: Request) { if (!isSameOrigin(request)) return jsonError('请求来源无效', 403); if (!await authorizeAdminRequest(request)) return jsonError('请先登录', 401); const parsed = z.object({ travelerId: z.string() }).safeParse(await request.json().catch(() => null)); if (!parsed.success) return jsonError('旅人编号无效', 400); const traveler = await prisma.traveler.findUnique({ where: { id: parsed.data.travelerId } }); if (!traveler || traveler.status !== 'claimed') return jsonError('只有已认领旅人能恢复账号', 409); const token = createAccountToken('credential_recovery'); await prisma.$transaction([prisma.accountToken.updateMany({ where: { travelerId: traveler.id, purpose: 'credential_recovery', status: 'active' }, data: { status: 'revoked' } }), prisma.accountToken.create({ data: { tokenHash: token.tokenHash, purpose: token.purpose, status: token.status, expiresAt: token.expiresAt, travelerId: traveler.id } })]); return Response.json({ recoveryUrl: `${new URL(request.url).origin}/claim/${token.token}`, expiresAt: token.expiresAt }); }

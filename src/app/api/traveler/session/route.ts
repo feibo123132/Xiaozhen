@@ -1,0 +1,9 @@
+import { z } from 'zod';
+import { verifyPassword } from '@/features/auth/password';
+import { clearAuthThrottle, recordAuthFailure, throttleKey, throttleStatus } from '@/features/auth/rate-limit';
+import { createTravelerSession, hashTravelerSession, travelerCookie, TRAVELER_SESSION_COOKIE } from '@/features/travelers/traveler-session';
+import { readCookie } from '@/features/auth/session';
+import { prisma } from '@/lib/db';
+import { isSameOrigin, jsonError } from '@/lib/http';
+export async function POST(request: Request) { if (!isSameOrigin(request)) return jsonError('请求来源无效', 403); const parsed = z.object({ publicId: z.string().trim().min(1), password: z.string().min(1) }).safeParse(await request.json().catch(() => null)); if (!parsed.success) return jsonError('请输入旅人编号和密码', 400); const keyHash = throttleKey('traveler-login', parsed.data.publicId); const status = await throttleStatus(prisma, keyHash); if (!status.allowed) return Response.json({ error: '尝试次数过多', retryAfterSeconds: status.retryAfterSeconds }, { status: 429 }); const traveler = await prisma.traveler.findUnique({ where: { publicId: parsed.data.publicId } }); if (!traveler?.credentialHash || traveler.status !== 'claimed' || !verifyPassword(parsed.data.password, traveler.credentialHash)) { await recordAuthFailure(prisma, keyHash); return jsonError('旅人编号或密码不正确', 401); } await clearAuthThrottle(prisma, keyHash); const session = await createTravelerSession(prisma, traveler.id); return Response.json({ ok: true }, { headers: { 'Set-Cookie': travelerCookie(session.token, session.expiresAt) } }); }
+export async function DELETE(request: Request) { const token = readCookie(request.headers.get('cookie'), TRAVELER_SESSION_COOKIE); if (token) await prisma.session.deleteMany({ where: { tokenHash: hashTravelerSession(token), actorType: 'traveler' } }); return Response.json({ ok: true }, { headers: { 'Set-Cookie': `${TRAVELER_SESSION_COOKIE}=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0` } }); }

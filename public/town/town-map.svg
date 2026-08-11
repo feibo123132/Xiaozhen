@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="林场与牧场组成的解忧小镇">
+  <defs>
+    <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#d9dfc7"/><stop offset="1" stop-color="#f1d8aa"/></linearGradient>
+    <pattern id="paper" width="42" height="42" patternUnits="userSpaceOnUse"><path d="M0 41.5h42" stroke="#17362f" opacity=".045"/><circle cx="8" cy="9" r="1" fill="#17362f" opacity=".08"/></pattern>
+  </defs>
+  <rect width="1600" height="900" fill="url(#sky)" rx="60"/>
+  <path d="M0 322Q230 170 485 290T930 250Q1170 160 1600 290V900H0Z" fill="#76906a"/>
+  <path d="M0 470Q270 340 550 470T1030 420Q1310 330 1600 455V900H0Z" fill="#4e705c"/>
+  <path d="M780 900c-70-170-44-305 75-407 112-96 193-147 242-270" fill="none" stroke="#ead5a6" stroke-width="92" stroke-linecap="round"/>
+  <path d="M0 650Q280 590 570 720T1160 650Q1390 600 1600 690V900H0Z" fill="#b4bd79"/>
+  <path d="M0 0h1600v900H0z" fill="url(#paper)"/>
+  <g fill="#17362f" opacity=".78" font-family="serif"><text x="120" y="145" font-size="42">林场</text><text x="125" y="178" font-size="16" letter-spacing="6">THE FOREST</text><text x="1280" y="600" font-size="42">牧场</text><text x="1282" y="633" font-size="16" letter-spacing="6">THE PASTURE</text></g>
+  <g fill="none" stroke="#17362f" opacity=".35"><path d="M82 215q160-90 310 0"/><path d="M1190 675q145-72 290 0"/></g>
+</svg>

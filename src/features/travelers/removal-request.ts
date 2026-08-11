@@ -1,0 +1,1 @@
+export function canTransitionRemovalRequest(current: string, target: 'approved' | 'rejected' | 'cancelled', reason?: string) { if (current !== 'pending') return false; if (target === 'rejected') return Boolean(reason?.trim()); return true; }

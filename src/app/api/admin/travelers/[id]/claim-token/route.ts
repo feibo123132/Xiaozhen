@@ -1,0 +1,5 @@
+import { createAccountToken } from '@/features/auth/account-token';
+import { authorizeAdminRequest } from '@/features/auth/guards';
+import { prisma } from '@/lib/db';
+import { isSameOrigin, jsonError } from '@/lib/http';
+export async function POST(request: Request, { params }: { params: Promise<{ id: string }> }) { if (!isSameOrigin(request)) return jsonError('请求来源无效', 403); if (!await authorizeAdminRequest(request)) return jsonError('请先登录', 401); const { id } = await params; const traveler = await prisma.traveler.findUnique({ where: { id } }); if (!traveler || traveler.status !== 'unclaimed') return jsonError('只有未认领旅人能生成初次认领卡', 409); const token = createAccountToken('initial_claim'); await prisma.$transaction([prisma.accountToken.updateMany({ where: { travelerId: id, purpose: 'initial_claim', status: 'active' }, data: { status: 'revoked' } }), prisma.accountToken.create({ data: { tokenHash: token.tokenHash, purpose: token.purpose, status: token.status, expiresAt: token.expiresAt, travelerId: id } })]); return Response.json({ claimUrl: `${new URL(request.url).origin}/claim/${token.token}`, expiresAt: token.expiresAt }); }

@@ -1,0 +1,2 @@
+import Image from 'next/image';
+export function AssetPicker({ assets }: { assets: Array<{ id: string; name: string; type: string; previewPath: string }> }) { return <section className="asset-catalog"><h2>只读生命素材库</h2><div>{assets.map((asset) => <article key={asset.id}><Image src={asset.previewPath} alt={asset.name} width={100} height={100} /><strong>{asset.name}</strong><span>{asset.type === 'tree' ? '林场树木' : '牧场动物'}</span></article>)}</div></section>; }

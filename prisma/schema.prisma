@@ -1,0 +1,158 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Event {
+  id        String         @id @default(cuid())
+  slug      String         @unique
+  title     String
+  intro     String
+  eventDate DateTime?
+  status    String         @default("draft")
+  features  EventFeature[]
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+}
+
+model EventFeature {
+  id       String @id @default(cuid())
+  eventId  String
+  worryId  String
+  position Int
+  event    Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  worry    Worry  @relation(fields: [worryId], references: [id], onDelete: Cascade)
+
+  @@unique([eventId, worryId])
+  @@unique([eventId, position])
+}
+
+model Worry {
+  id          String          @id @default(cuid())
+  slug        String          @unique
+  title       String
+  body        String
+  background  String?
+  status      String          @default("draft")
+  sensitive   Boolean         @default(false)
+  lifeAssetId String
+  lifeAsset   LifeAsset       @relation(fields: [lifeAssetId], references: [id])
+  placement   MapPlacement?
+  features    EventFeature[]
+  viewpoints  Viewpoint[]
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+}
+
+model LifeAsset {
+  id               String   @id
+  type             String
+  name             String
+  previewPath      String
+  growthStagePaths Json
+  growthThresholds Json
+  worries          Worry[]
+}
+
+model MapPlacement {
+  id      String @id @default(cuid())
+  worryId String @unique
+  zone    String
+  x       Float
+  y       Float
+  zIndex  Int    @default(0)
+  worry   Worry  @relation(fields: [worryId], references: [id], onDelete: Cascade)
+}
+
+model Traveler {
+  id             String           @id @default(cuid())
+  publicId       String           @unique
+  pseudonym      String
+  avatarKey      String
+  bio            String?
+  status         String           @default("unclaimed")
+  credentialHash String?
+  viewpoints     Viewpoint[]
+  accountTokens  AccountToken[]
+  sessions       Session[]
+  removalRequests RemovalRequest[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+}
+
+model Viewpoint {
+  id                       String           @id @default(cuid())
+  body                     String
+  status                   String           @default("draft")
+  authorizationConfirmedAt DateTime?
+  authorizationNote        String?
+  publishedAt              DateTime?
+  idempotencyKey           String?          @unique
+  worryId                  String
+  travelerId               String
+  worry                    Worry            @relation(fields: [worryId], references: [id], onDelete: Cascade)
+  traveler                 Traveler         @relation(fields: [travelerId], references: [id], onDelete: Cascade)
+  removalRequests          RemovalRequest[]
+  createdAt                DateTime          @default(now())
+  updatedAt                DateTime          @updatedAt
+}
+
+model AccountToken {
+  id         String    @id @default(cuid())
+  tokenHash  String    @unique
+  purpose    String
+  status     String    @default("active")
+  expiresAt  DateTime
+  consumedAt DateTime?
+  travelerId String
+  traveler   Traveler  @relation(fields: [travelerId], references: [id], onDelete: Cascade)
+  createdAt  DateTime  @default(now())
+}
+
+model AdminUser {
+  id           String    @id @default(cuid())
+  username     String    @unique
+  passwordHash String
+  sessions     Session[]
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Session {
+  id          String     @id @default(cuid())
+  tokenHash   String     @unique
+  actorType   String
+  expiresAt   DateTime
+  adminUserId String?
+  travelerId  String?
+  adminUser   AdminUser? @relation(fields: [adminUserId], references: [id], onDelete: Cascade)
+  traveler    Traveler?  @relation(fields: [travelerId], references: [id], onDelete: Cascade)
+  createdAt   DateTime   @default(now())
+}
+
+model RemovalRequest {
+  id             String    @id @default(cuid())
+  status         String    @default("pending")
+  rejectionReason String?
+  viewpointId    String
+  travelerId     String
+  viewpoint      Viewpoint @relation(fields: [viewpointId], references: [id], onDelete: Cascade)
+  traveler       Traveler  @relation(fields: [travelerId], references: [id], onDelete: Cascade)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@index([viewpointId, status])
+}
+
+model AuthThrottle {
+  id              String    @id @default(cuid())
+  keyHash         String    @unique
+  failureCount    Int       @default(0)
+  windowStartedAt DateTime
+  blockedUntil    DateTime?
+  updatedAt       DateTime  @updatedAt
+}

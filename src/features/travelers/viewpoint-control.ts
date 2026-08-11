@@ -1,0 +1,1 @@
+export function nextOwnedViewpointStatus(current: string, action: 'hide' | 'restore') { if (current === 'published' && action === 'hide') return 'hidden'; if (current === 'hidden' && action === 'restore') return 'published'; throw new Error('This viewpoint cannot make that visibility transition'); }
