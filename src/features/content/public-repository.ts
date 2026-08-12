@@ -27,6 +27,27 @@ function stagePaths(value: Prisma.JsonValue): string[] {
   return paths;
 }
 
+function placementView(placement: {
+  id: string;
+  worryId: string;
+  zone: string;
+  x: number;
+  y: number;
+  zIndex: number;
+  layoutVersion: number;
+} | null) {
+  if (!placement) return null;
+  return {
+    id: placement.id,
+    worryId: placement.worryId,
+    zone: placement.zone,
+    x: placement.x,
+    y: placement.y,
+    zIndex: placement.zIndex,
+    layoutVersion: placement.layoutVersion,
+  };
+}
+
 function lifeView(lifeAsset: {
   id: string;
   name: string;
@@ -65,7 +86,7 @@ export function createPublicRepository(database: PublicPrisma) {
         slug: worry.slug,
         title: worry.title,
         publishedViewpointCount: worry.viewpoints.length,
-        placement: worry.placement,
+        placement: placementView(worry.placement),
         life: lifeView(worry.lifeAsset, worry.viewpoints.length),
       }));
     },
@@ -128,7 +149,7 @@ export function createPublicRepository(database: PublicPrisma) {
         body: worry.body,
         background: worry.background,
         sensitive: worry.sensitive,
-        placement: worry.placement,
+        placement: placementView(worry.placement),
         publishedViewpointCount,
         growthStage: lifeView(worry.lifeAsset, publishedViewpointCount).growthStage,
         life: lifeView(worry.lifeAsset, publishedViewpointCount),

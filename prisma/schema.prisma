@@ -65,6 +65,7 @@ model MapPlacement {
   x       Float
   y       Float
   zIndex  Int    @default(0)
+  layoutVersion Int @default(1)
   worry   Worry  @relation(fields: [worryId], references: [id], onDelete: Cascade)
 }
 
