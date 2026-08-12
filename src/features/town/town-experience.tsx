@@ -31,15 +31,15 @@ export function TownExperience({ world, worries, canvasComponent, canvasImporter
   const [error, setError] = useState(false);
   const [attempt, setAttempt] = useState(0);
   const [dragged, setDragged] = useState(false);
-  const [loadedCanvas, setLoadedCanvas] = useState<ComponentType<PixiTownCanvasProps> | null>(() => canvasComponent ?? null);
+  const [loadedCanvas, setLoadedCanvas] = useState<{ attempt: number; component: ComponentType<PixiTownCanvasProps> } | null>(null);
+  const activeCanvas = canvasComponent ?? (loadedCanvas?.attempt === attempt ? loadedCanvas.component : null);
 
   useEffect(() => { const node = viewportRef.current; if (!node) return; if (typeof IntersectionObserver === 'undefined') return; const observer = new IntersectionObserver(([entry]) => { if (entry.isIntersecting) setEntered(true); }); observer.observe(node); return () => observer.disconnect(); }, []);
   useEffect(() => {
-    if (canvasComponent || !entered) { setLoadedCanvas(() => canvasComponent ?? null); return; }
+    if (canvasComponent || !entered) return;
     let active = true;
-    setLoadedCanvas(null);
     void canvasImporter().then(
-      ({ default: component }) => { if (active) setLoadedCanvas(() => component); },
+      ({ default: component }) => { if (active) setLoadedCanvas({ attempt, component }); },
       () => { if (active) setError(true); },
     );
     return () => { active = false; };
@@ -57,7 +57,7 @@ export function TownExperience({ world, worries, canvasComponent, canvasImporter
     <div ref={viewportRef} className={styles.viewport} onClickCapture={(event) => { if (suppressClickRef.current) { event.preventDefault(); event.stopPropagation(); suppressClickRef.current = false; if (suppressionTimer.current) clearTimeout(suppressionTimer.current); } }} onPointerDown={pointerDown} onPointerMove={pointerMove} onPointerUp={pointerUp} onPointerCancel={pointerUp} onWheel={(event) => { event.preventDefault(); if (camera) { const rect = event.currentTarget.getBoundingClientRect(); setCamera(zoomAtPointer(camera, { x: event.clientX - rect.left, y: event.clientY - rect.top }, camera.zoom * (event.deltaY > 0 ? .9 : 1.1))); } }}>
       <Image className={styles.poster} src="/town/pixel/v2/poster.png" alt="解忧小镇地图预览" width={1536} height={864} priority />
       {!entered || !camera ? <p className={styles.loading}>地图正在醒来</p> : null}
-      {entered && camera && loadedCanvas && !error ? <CanvasBoundary key={attempt} onError={() => setError(true)}>{React.createElement(loadedCanvas, { world, camera, mode: 'public', onError: () => setError(true) })}</CanvasBoundary> : null}
+      {entered && camera && activeCanvas && !error ? <CanvasBoundary key={attempt} onError={() => setError(true)}>{React.createElement(activeCanvas, { world, camera, mode: 'public', onError: () => setError(true) })}</CanvasBoundary> : null}
       {camera ? <InteractionOverlay world={world} worries={worries} camera={camera} onCameraChange={setCamera} /> : null}
       {error ? <button className={styles.retry} type="button" onClick={() => { setError(false); setAttempt((value) => value + 1); }}>重试加载地图</button> : null}
     </div></section>;

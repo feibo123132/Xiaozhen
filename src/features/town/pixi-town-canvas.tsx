@@ -89,7 +89,10 @@ export function PixiTownCanvas({ world, camera, mode, onError }: PixiTownCanvasP
   const onErrorRef = useRef(onError);
   const [atlasTexture, setAtlasTexture] = useState<Texture | null>(null);
   const [rendererReady, setRendererReady] = useState(false);
-  onErrorRef.current = onError;
+
+  useEffect(() => {
+    onErrorRef.current = onError;
+  }, [onError]);
 
   const reportError = useCallback((reason: unknown) => {
     if (mountedRef.current) onErrorRef.current?.(asError(reason));
