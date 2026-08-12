@@ -1,0 +1,1 @@
+ALTER TABLE "MapPlacement" ADD COLUMN "layoutVersion" INTEGER NOT NULL DEFAULT 1;

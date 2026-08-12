@@ -23,6 +23,32 @@ describe('public content repository', () => {
     });
   });
 
+  it('returns unchanged versioned placement data from town and detail endpoints', async () => {
+    const repository = createPublicRepository(fixture.prisma);
+    const storedWorry = await fixture.prisma.worry.findUniqueOrThrow({
+      where: { slug: 'leave-or-stay' },
+      include: { placement: true },
+    });
+    const expectedPlacement = {
+      id: storedWorry.placement?.id,
+      worryId: storedWorry.id,
+      zone: 'forest',
+      x: 12,
+      y: 30,
+      zIndex: 0,
+      layoutVersion: 1,
+    };
+
+    const town = await repository.getTownWorries();
+    const worry = await repository.getWorryBySlug('leave-or-stay');
+
+    expect(town[0]?.placement).toEqual(expectedPlacement);
+    expect(worry?.placement).toEqual(expectedPlacement);
+    expect(Object.keys(town[0]?.placement ?? {}).sort()).toEqual(
+      ['id', 'layoutVersion', 'worryId', 'x', 'y', 'zIndex', 'zone'].sort(),
+    );
+  });
+
   it('excludes drafts and hidden viewpoints from public worry details', async () => {
     const repository = createPublicRepository(fixture.prisma);
 

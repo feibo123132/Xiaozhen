@@ -21,7 +21,7 @@ export function createRepositoryFixture() {
     async start() {
       execFileSync(process.execPath, ['node_modules/prisma/build/index.js', 'db', 'push', '--url', databaseUrl], {
         cwd: process.cwd(),
-        env: { ...process.env, DATABASE_URL: databaseUrl },
+        env: { ...process.env, DATABASE_URL: databaseUrl, RUST_LOG: process.env.RUST_LOG ?? 'info' },
         stdio: 'ignore',
       });
       client = createPrismaClient(databaseUrl);
@@ -42,6 +42,9 @@ export function createRepositoryFixture() {
           body: '我不知道该留在稳定的工作，还是重新开始。',
           status: 'published',
           lifeAssetId: asset.id,
+          placement: {
+            create: { zone: 'forest', x: 12, y: 30, zIndex: 0, layoutVersion: 1 },
+          },
         },
       });
       await client.worry.create({

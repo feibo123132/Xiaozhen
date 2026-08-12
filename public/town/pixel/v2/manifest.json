@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 2,
+  "posterPath": "/town/pixel/v2/poster.png",
+  "atlases": {
+    "graybox": {
+      "imagePath": "/town/pixel/v2/atlases/graybox.png",
+      "dataPath": "/town/pixel/v2/atlases/graybox.json",
+      "width": 1536,
+      "height": 1024,
+      "frames": {
+        "distant-mountains": { "x": 108, "y": 158, "width": 371, "height": 126 },
+        "terrain-forest": { "x": 610, "y": 46, "width": 319, "height": 284 },
+        "terrain-station": { "x": 1057, "y": 87, "width": 339, "height": 242 },
+        "terrain-pasture": { "x": 149, "y": 422, "width": 329, "height": 228 },
+        "waystation": { "x": 582, "y": 375, "width": 382, "height": 300 },
+        "bridge": { "x": 1064, "y": 449, "width": 332, "height": 209 },
+        "notice-board": { "x": 188, "y": 719, "width": 228, "height": 213 },
+        "test-pine": { "x": 698, "y": 708, "width": 125, "height": 220 },
+        "test-sheep": { "x": 1131, "y": 819, "width": 117, "height": 93 }
+      }
+    }
+  },
+  "scene": {
+    "distantMountains": { "atlas": "graybox", "frame": "distant-mountains" },
+    "forestTerrain": { "atlas": "graybox", "frame": "terrain-forest" },
+    "centralTerrain": { "atlas": "graybox", "frame": "terrain-station" },
+    "pastureTerrain": { "atlas": "graybox", "frame": "terrain-pasture" },
+    "waystation": { "atlas": "graybox", "frame": "waystation" },
+    "bridge": { "atlas": "graybox", "frame": "bridge" },
+    "noticeBoard": { "atlas": "graybox", "frame": "notice-board" }
+  },
+  "lives": [
+    {
+      "id": "mist-pine", "kind": "tree",
+      "stages": [
+        { "stage": 0, "atlas": "graybox", "frame": "test-pine", "anchor": { "x": 62, "y": 219 }, "hitArea": { "x": 47, "y": 136, "width": 30, "height": 84 }, "idle": { "frames": ["test-pine", "test-pine"], "frameMs": 420, "pauseMs": 1800 }, "reducedMotionFrame": "test-pine" },
+        { "stage": 1, "atlas": "graybox", "frame": "test-pine", "anchor": { "x": 62, "y": 219 }, "hitArea": { "x": 47, "y": 136, "width": 30, "height": 84 }, "idle": { "frames": ["test-pine", "test-pine"], "frameMs": 420, "pauseMs": 1800 }, "reducedMotionFrame": "test-pine" },
+        { "stage": 2, "atlas": "graybox", "frame": "test-pine", "anchor": { "x": 62, "y": 219 }, "hitArea": { "x": 47, "y": 136, "width": 30, "height": 84 }, "idle": { "frames": ["test-pine", "test-pine"], "frameMs": 420, "pauseMs": 1800 }, "reducedMotionFrame": "test-pine" },
+        { "stage": 3, "atlas": "graybox", "frame": "test-pine", "anchor": { "x": 62, "y": 219 }, "hitArea": { "x": 47, "y": 136, "width": 30, "height": 84 }, "idle": { "frames": ["test-pine", "test-pine"], "frameMs": 420, "pauseMs": 1800 }, "reducedMotionFrame": "test-pine" }
+      ]
+    },
+    {
+      "id": "sun-oak", "kind": "tree",
+      "stages": [
+        { "stage": 0, "atlas": "graybox", "frame": "test-pine", "anchor": { "x": 62, "y": 219 }, "hitArea": { "x": 47, "y": 136, "width": 30, "height": 84 }, "idle": { "frames": ["test-pine", "test-pine"], "frameMs": 420, "pauseMs": 1800 }, "reducedMotionFrame": "test-pine" },
+        { "stage": 1, "atlas": "graybox", "frame": "test-pine", "anchor": { "x": 62, "y": 219 }, "hitArea": { "x": 47, "y": 136, "width": 30, "height": 84 }, "idle": { "frames": ["test-pine", "test-pine"], "frameMs": 420, "pauseMs": 1800 }, "reducedMotionFrame": "test-pine" },
+        { "stage": 2, "atlas": "graybox", "frame": "test-pine", "anchor": { "x": 62, "y": 219 }, "hitArea": { "x": 47, "y": 136, "width": 30, "height": 84 }, "idle": { "frames": ["test-pine", "test-pine"], "frameMs": 420, "pauseMs": 1800 }, "reducedMotionFrame": "test-pine" },
+        { "stage": 3, "atlas": "graybox", "frame": "test-pine", "anchor": { "x": 62, "y": 219 }, "hitArea": { "x": 47, "y": 136, "width": 30, "height": 84 }, "idle": { "frames": ["test-pine", "test-pine"], "frameMs": 420, "pauseMs": 1800 }, "reducedMotionFrame": "test-pine" }
+      ]
+    },
+    {
+      "id": "quiet-birch", "kind": "tree",
+      "stages": [
+        { "stage": 0, "atlas": "graybox", "frame": "test-pine", "anchor": { "x": 62, "y": 219 }, "hitArea": { "x": 47, "y": 136, "width": 30, "height": 84 }, "idle": { "frames": ["test-pine", "test-pine"], "frameMs": 420, "pauseMs": 1800 }, "reducedMotionFrame": "test-pine" },
+        { "stage": 1, "atlas": "graybox", "frame": "test-pine", "anchor": { "x": 62, "y": 219 }, "hitArea": { "x": 47, "y": 136, "width": 30, "height": 84 }, "idle": { "frames": ["test-pine", "test-pine"], "frameMs": 420, "pauseMs": 1800 }, "reducedMotionFrame": "test-pine" },
+        { "stage": 2, "atlas": "graybox", "frame": "test-pine", "anchor": { "x": 62, "y": 219 }, "hitArea": { "x": 47, "y": 136, "width": 30, "height": 84 }, "idle": { "frames": ["test-pine", "test-pine"], "frameMs": 420, "pauseMs": 1800 }, "reducedMotionFrame": "test-pine" },
+        { "stage": 3, "atlas": "graybox", "frame": "test-pine", "anchor": { "x": 62, "y": 219 }, "hitArea": { "x": 47, "y": 136, "width": 30, "height": 84 }, "idle": { "frames": ["test-pine", "test-pine"], "frameMs": 420, "pauseMs": 1800 }, "reducedMotionFrame": "test-pine" }
+      ]
+    },
+    {
+      "id": "wandering-deer", "kind": "animal",
+      "stages": [
+        { "stage": 0, "atlas": "graybox", "frame": "test-sheep", "anchor": { "x": 58, "y": 92 }, "hitArea": { "x": 14, "y": 24, "width": 89, "height": 69 }, "idle": { "frames": ["test-sheep", "test-sheep"], "frameMs": 260, "pauseMs": 1400 }, "reducedMotionFrame": "test-sheep" },
+        { "stage": 1, "atlas": "graybox", "frame": "test-sheep", "anchor": { "x": 58, "y": 92 }, "hitArea": { "x": 14, "y": 24, "width": 89, "height": 69 }, "idle": { "frames": ["test-sheep", "test-sheep"], "frameMs": 260, "pauseMs": 1400 }, "reducedMotionFrame": "test-sheep" },
+        { "stage": 2, "atlas": "graybox", "frame": "test-sheep", "anchor": { "x": 58, "y": 92 }, "hitArea": { "x": 14, "y": 24, "width": 89, "height": 69 }, "idle": { "frames": ["test-sheep", "test-sheep"], "frameMs": 260, "pauseMs": 1400 }, "reducedMotionFrame": "test-sheep" },
+        { "stage": 3, "atlas": "graybox", "frame": "test-sheep", "anchor": { "x": 58, "y": 92 }, "hitArea": { "x": 14, "y": 24, "width": 89, "height": 69 }, "idle": { "frames": ["test-sheep", "test-sheep"], "frameMs": 260, "pauseMs": 1400 }, "reducedMotionFrame": "test-sheep" }
+      ]
+    },
+    {
+      "id": "warm-sheep", "kind": "animal",
+      "stages": [
+        { "stage": 0, "atlas": "graybox", "frame": "test-sheep", "anchor": { "x": 58, "y": 92 }, "hitArea": { "x": 14, "y": 24, "width": 89, "height": 69 }, "idle": { "frames": ["test-sheep", "test-sheep"], "frameMs": 260, "pauseMs": 1400 }, "reducedMotionFrame": "test-sheep" },
+        { "stage": 1, "atlas": "graybox", "frame": "test-sheep", "anchor": { "x": 58, "y": 92 }, "hitArea": { "x": 14, "y": 24, "width": 89, "height": 69 }, "idle": { "frames": ["test-sheep", "test-sheep"], "frameMs": 260, "pauseMs": 1400 }, "reducedMotionFrame": "test-sheep" },
+        { "stage": 2, "atlas": "graybox", "frame": "test-sheep", "anchor": { "x": 58, "y": 92 }, "hitArea": { "x": 14, "y": 24, "width": 89, "height": 69 }, "idle": { "frames": ["test-sheep", "test-sheep"], "frameMs": 260, "pauseMs": 1400 }, "reducedMotionFrame": "test-sheep" },
+        { "stage": 3, "atlas": "graybox", "frame": "test-sheep", "anchor": { "x": 58, "y": 92 }, "hitArea": { "x": 14, "y": 24, "width": 89, "height": 69 }, "idle": { "frames": ["test-sheep", "test-sheep"], "frameMs": 260, "pauseMs": 1400 }, "reducedMotionFrame": "test-sheep" }
+      ]
+    },
+    {
+      "id": "night-fox", "kind": "animal",
+      "stages": [
+        { "stage": 0, "atlas": "graybox", "frame": "test-sheep", "anchor": { "x": 58, "y": 92 }, "hitArea": { "x": 14, "y": 24, "width": 89, "height": 69 }, "idle": { "frames": ["test-sheep", "test-sheep"], "frameMs": 260, "pauseMs": 1400 }, "reducedMotionFrame": "test-sheep" },
+        { "stage": 1, "atlas": "graybox", "frame": "test-sheep", "anchor": { "x": 58, "y": 92 }, "hitArea": { "x": 14, "y": 24, "width": 89, "height": 69 }, "idle": { "frames": ["test-sheep", "test-sheep"], "frameMs": 260, "pauseMs": 1400 }, "reducedMotionFrame": "test-sheep" },
+        { "stage": 2, "atlas": "graybox", "frame": "test-sheep", "anchor": { "x": 58, "y": 92 }, "hitArea": { "x": 14, "y": 24, "width": 89, "height": 69 }, "idle": { "frames": ["test-sheep", "test-sheep"], "frameMs": 260, "pauseMs": 1400 }, "reducedMotionFrame": "test-sheep" },
+        { "stage": 3, "atlas": "graybox", "frame": "test-sheep", "anchor": { "x": 58, "y": 92 }, "hitArea": { "x": 14, "y": 24, "width": 89, "height": 69 }, "idle": { "frames": ["test-sheep", "test-sheep"], "frameMs": 260, "pauseMs": 1400 }, "reducedMotionFrame": "test-sheep" }
+      ]
+    }
+  ]
+}

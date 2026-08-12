@@ -51,7 +51,7 @@ async function main() {
       update: {},
       create: {
         slug, title, body, lifeAssetId, status: 'published',
-        placement: { create: { zone: index < 5 ? 'forest' : 'pasture', x: 12 + (index % 5) * 18, y: index < 5 ? 30 + (index % 2) * 24 : 62 + (index % 2) * 16, zIndex: index } },
+        placement: { create: { zone: index < 5 ? 'forest' : 'pasture', x: 12 + (index % 5) * 18, y: index < 5 ? 30 + (index % 2) * 24 : 62 + (index % 2) * 16, zIndex: index, layoutVersion: 1 } },
       },
     });
   }
